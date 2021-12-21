@@ -5,3 +5,4 @@
     - "./vars.yml"
   roles:
     - vm_check_setup
+    - geerlingguy.docker

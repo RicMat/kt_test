@@ -15,11 +15,16 @@ Following the [tutorial](https://www.hamvocke.com/blog/local-ansible-testing/) b
   - ```ansible.inventory_path = "hosts"```
   - ```ansible.playbook = "playbook.yml"```
 
-## Check the partition's size
+## Check (and resize) the partition
 
 There are a few ways to proceed. One would be to use 
 the widely used ```kevincoakley.disk``` role which unfortunately doesn't work for me. 
-The other way is to implement a basic resizing role, which is implemented in ```roles/vm_check_setup```.  
+The other way is to implement a basic resizing role, which is implemented in ```roles/vm_check_setup``` and added to
+the playbook:
+```
+roles:
+  - vm_check_setup
+```  
 This role, which is very similar to the aforementioned one, checks the current partition, creates a new one, 
 and after it's formatted, it mounts it:
 - ```name: Check device info```
@@ -27,4 +32,16 @@ and after it's formatted, it mounts it:
 - ```name: Format partition```
 - ```name: Mount partition```
 
+## Install Docker
+
+There is a very famous and widely used role for this task, which is 
+```geerlingguy.docker``` available on [GitHub](https://github.com/geerlingguy/ansible-role-docker) and that we 
+add to the playbook:  
+```
+roles: 
+  - vm_check_setup 
+  - geerlingguy.docker
+```  
+Another option would be to create a role ourselves, one similar to 
+[this one](https://www.gabrielbautista.com/post/instalando-docker-ce-desde-un-playbook-para-centos-7-y-8).  
 
