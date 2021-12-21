@@ -15,5 +15,16 @@ Following the [tutorial](https://www.hamvocke.com/blog/local-ansible-testing/) b
   - ```ansible.inventory_path = "hosts"```
   - ```ansible.playbook = "playbook.yml"```
 
+## Check the partition's size
+
+There are a few ways to proceed. One would be to use 
+the widely used ```kevincoakley.disk``` role which unfortunately doesn't work for me. 
+The other way is to implement a basic resizing role, which is implemented in ```roles/vm_check_setup```.  
+This role, which is very similar to the aforementioned one, checks the current partition, creates a new one, 
+and after it's formatted, it mounts it:
+- ```name: Check device info```
+- ```name: Create new partition```
+- ```name: Format partition```
+- ```name: Mount partition```
 
 

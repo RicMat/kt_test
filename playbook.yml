@@ -1,0 +1,7 @@
+- name: Playbook
+  hosts: all
+  become: yes
+  vars_files:
+    - "./vars.yml"
+  roles:
+    - vm_check_setup
