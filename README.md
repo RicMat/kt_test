@@ -45,3 +45,18 @@ roles:
 Another option would be to create a role ourselves, one similar to 
 [this one](https://www.gabrielbautista.com/post/instalando-docker-ce-desde-un-playbook-para-centos-7-y-8).  
 
+## Docker's configuration
+
+The first step is to secure Docker. This is easily done by means of the 
+```alexinthesky.secure-docker-daemon``` role, available on [GitHub](https://github.com/alexinthesky/role-secure-docker-daemon).  
+However, because we also want to make sure that Docker will start automatically, instead of adding it
+directly to the playbook, we create a role which includes it. A variety
+of online resources are available in this sense, for example [this tutorial](https://sleeplessbeastie.eu/2020/09/11/how-to-start-docker-service-at-system-boot/)
+on sleeplessbeastie.eu or one could use the ```restart policy``` available in the [documentation](https://docs.ansible.com/ansible/latest/collections/community/docker/docker_container_module.html#parameter-restart_policy).
+This new role is finally also added to the playbook:  
+```
+roles: 
+  - vm_check_setup 
+  - geerlingguy.docker
+  - vm_setup_secure_docker
+```  

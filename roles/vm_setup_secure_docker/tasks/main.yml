@@ -1,0 +1,40 @@
+- name: Get certificates
+  include_role:
+    name: alexinthesky.secure-docker-daemon
+  vars:
+    dds_host: "{{ inventory_hostname }}"
+
+- name: Create directory
+  file:
+    path: "/etc/systemd/system/docker.service.d"
+    state: directory
+    mode: 0755
+
+- name: Edit docker configuration
+  copy:
+    dest: "/etc/systemd/system/docker.service.d/override.conf"
+    content: |
+      [Service]
+      ExecStart=
+      ExecStart=/usr/bin/dockerd -H unix:///var/run/docker.sock -H unix:///var/run/docker.sock -H tcp://0.0.0.0:2376 --tlsverify --tlscacert=/etc/docker/ca.pem --tlscert=/etc/docker/server-cert.pem --tlskey=/etc/docker/server-key.pem
+    mode: 0644
+
+- name: Restart Docker
+  ansible.builtin.systemd:
+    daemon_reload: yes
+    name: docker
+    state: restarted
+
+- name: Search certificates
+  find:
+    paths: "{{ dds_client_cert_path }}"
+    recurse: no
+    pattern: "*.pem"
+  register: files_to_copy
+
+- name: Collect files
+  fetch:
+    src: "{{ item.path }}"
+    dest: "../client/{{ inventory_hostname }}/"
+    flat: yes
+  with_items: "{{ files_to_copy.files }}"

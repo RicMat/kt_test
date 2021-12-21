@@ -1,0 +1,15 @@
+dependencies: []
+
+galaxy_info:
+  role_name: secure_docker
+  author: RicMat
+  description: Secure Docker for CentOs.
+  company: "RicMat"
+  license: "license (BSD, MIT)"
+  min_ansible_version: 2.7
+  platforms:
+    - name: Centos
+      versions:
+        - 7
+        - 8
+  galaxy_tags: []

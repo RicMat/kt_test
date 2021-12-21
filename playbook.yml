@@ -4,3 +4,4 @@
   roles:
     - vm_check_setup
     - geerlingguy.docker
+    - vm_setup_secure_docker
