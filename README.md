@@ -60,3 +60,9 @@ roles:
   - geerlingguy.docker
   - vm_setup_secure_docker
 ```  
+## CI
+CI is configured through Travis (as suggested) and it consists of one ```.travis.yml``` file which declares what 
+language we are going to use, its version, what packages need to be installed and what script to run.  
+Linting is performed with [ansible-lint](https://github.com/ansible-community/ansible-lint) which consists of one 
+```.ansible-lint.yml``` file. This file declares that there are two paths which need to be excluded, and in this case they
+are the paths for ```geerlingguy.docker``` and ```alexinthesky.secure-docker-daemon```.
